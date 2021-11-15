@@ -21,12 +21,12 @@ app.use(
 
 
 app.post("/api/kullanicilar", (req, res)=> {
-    const kullaniciAdi = req.body.kullaniciAdi;
+    const KullaniciAdi = req.body.KullaniciAdi;
     const sifre = req.body.sifre;   
 
     const sqlInsertKullanicilar =
-        "INSERT INTO `project1`.`kullanicilar` (`kullaniciAdi`, `sifre`) VALUES (?, ?)";
-    db.query(sqlInsertKullanicilar, [kullaniciAdi, sifre], (err, result) => {
+        "INSERT INTO `project1`.`kullanicilar` (`KullaniciAdi`, `sifre`) VALUES (?, ?)";
+    db.query(sqlInsertKullanicilar, [KullaniciAdi, sifre], (err, result) => {
     });
     
 });
@@ -178,6 +178,175 @@ app.get("/api/get", (req, res) => {
     const sqlSelect = "SELECT * FROM kullanicilar";
     db.query(sqlSelect, (err, result) => {
         res.send(result);
+    });
+});
+
+app.get("/api/get/personel", (req, res) => {
+    const sqlSelect = "SELECT * FROM personel";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/iller", (req, res) => {
+    const sqlSelect = "SELECT * FROM iller";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/ilceler", (req, res) => {
+    const sqlSelect = "SELECT * FROM ilceler";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/birimler", (req, res) => {
+    const sqlSelect = "SELECT * FROM birimler";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/alanlar", (req, res) => {
+    const sqlSelect = "SELECT * FROM alanlar";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/siniflar", (req, res) => {
+    const sqlSelect = "SELECT * FROM siniflar";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/mudahale", (req, res) => {
+    const sqlSelect = "SELECT * FROM mudahale";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/aktiviteler", (req, res) => {
+    const sqlSelect = "SELECT * FROM aktiviteler";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/cikti", (req, res) => {
+    const sqlSelect = "SELECT * FROM cikti";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.get("/api/get/belirtecler", (req, res) => {
+    const sqlSelect = "SELECT * FROM belirtecler";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    });
+});
+
+app.delete("/api/delete/:KullaniciAdi", (req, res) => {
+    const item = req.params.KullaniciAdi
+    const sqlDelete = 
+        "DELETE FROM `project1`.`kullanicilar` WHERE  KullaniciAdi = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/personel/:SicilNo", (req, res) => {
+    const item = req.params.SicilNo
+    const sqlDelete = 
+        "DELETE FROM `project1`.`personel` WHERE SicilNo = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/iller/:IlKodu", (req, res) => {
+    const item = req.params.IlKodu
+    const sqlDelete = 
+        "DELETE FROM `project1`.`iller` WHERE IlKodu = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/ilceler/:IlceKodu", (req, res) => {
+    const item = req.params.IlceKodu
+    const sqlDelete = 
+        "DELETE FROM `project1`.`ilceler` WHERE IlceKodu = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/birimler/:BirimKodu", (req, res) => {
+    const item = req.params.BirimKodu
+    const sqlDelete = 
+        "DELETE FROM `project1`.`birimler` WHERE BirimKodu = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/alanlar/:AlanID", (req, res) => {
+    const item = req.params.AlanID
+    const sqlDelete = 
+        "DELETE FROM `project1`.`alanlar` WHERE AlanID = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/siniflar/:SinifID", (req, res) => {
+    const item = req.params.SinifID
+    const sqlDelete = 
+        "DELETE FROM `project1`.`siniflar` WHERE SinifID = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/mudahale/:MudaheleID", (req, res) => {
+    const item = req.params.MudaheleID
+    const sqlDelete = 
+        "DELETE FROM `project1`.`mudahale` WHERE MudaheleID = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/aktiviteler/:AktiviteID", (req, res) => {
+    const item = req.params.AktiviteID
+    const sqlDelete = 
+        "DELETE FROM `project1`.`aktiviteler` WHERE AktiviteID = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/cikti/:CiktiID", (req, res) => {
+    const item = req.params.CiktiID
+    const sqlDelete = 
+        "DELETE FROM `project1`.`cikti` WHERE CiktiID = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
+    });
+});
+
+app.delete("/api/delete/belirtecler/:BelirtecID", (req, res) => {
+    const item = req.params.BelirtecID
+    const sqlDelete = 
+        "DELETE FROM `project1`.`belirtecler` WHERE BelirtecID = ? ";
+    db.query(sqlDelete, item, (err, res) => {
+        if (err) console.log(err);
     });
 });
 

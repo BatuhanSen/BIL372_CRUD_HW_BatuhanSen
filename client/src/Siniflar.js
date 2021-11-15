@@ -9,6 +9,15 @@ function Siniflar() {
     const [SinifAdi, setSinifAdi] = useState("");
     const [AlanTipi, setAlanTipi] = useState("");
 
+    const [siniflarList, setSiniflarList] = useState ([]);
+
+    useEffect(() => {
+      Axios.get('http://localhost:3001/api/get/siniflar').then((response)=> {
+        setSiniflarList(response.data);
+      });
+      
+    }, []);
+
     const sinifKaydet = () => {
         Axios.post("http://localhost:3001/api/siniflar", {
             SinifID: SinifID,
@@ -18,7 +27,10 @@ function Siniflar() {
             alert ("Successful");
         })
         
-    }
+    };
+    const deleteItem = (item) => {
+      Axios.delete(`http://localhost:3001/api/delete/siniflar/${item}`)
+  };
   return (
     <div className="Kullanicilar">
       <h1>Rent a Car</h1>
@@ -41,6 +53,20 @@ function Siniflar() {
            Geri
          </button>
       </Link>
+
+      <br></br><br></br>
+      {siniflarList.map((val) => (
+        <tbody>
+          
+            <td> Sinif ID = {val.SinifID}</td>
+            <td> Sinif Adi = {val.SinifAdi}</td>
+            <td> Alan Tipi = {val.AlanTipi}</td>
+            <button> Update </button>
+            <button onClick = {() => {deleteItem(val.SinifID )}}> Delete </button>
+            <br></br>
+        </tbody>
+      )
+      )}
     </div>
   );
 }

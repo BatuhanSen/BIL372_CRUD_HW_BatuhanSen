@@ -9,6 +9,15 @@ function Alanlar() {
     const [AlanAdi, setAlanAdi] = useState("");
     const [AlanTipi, setAlanTipi] = useState("");
 
+    const [alanlarList, setAlanlarList] = useState ([]);
+
+    useEffect(() => {
+      Axios.get('http://localhost:3001/api/get/alanlar').then((response)=> {
+        setAlanlarList(response.data);
+      });
+      
+    }, []);
+
     const alanKaydet = () => {
         Axios.post("http://localhost:3001/api/alanlar", {
             AlanID: AlanID,
@@ -18,7 +27,11 @@ function Alanlar() {
             alert ("Successful");
         })
         
-    }
+    };
+
+    const deleteItem = (item) => {
+      Axios.delete(`http://localhost:3001/api/delete/alanlar/${item}`)
+  };
   return (
     <div className="Kullanicilar">
       <h1>Rent a Car</h1>
@@ -41,6 +54,19 @@ function Alanlar() {
            Geri
          </button>
       </Link>
+      <br></br><br></br>
+      {alanlarList.map((val) => (
+        <tbody>
+          
+            <td> Alan ID = {val.AlanID}</td>
+            <td> Alan Adi = {val.AlanAdi}</td>
+            <td> Alan Tipi = {val.AlanTipi}</td>
+            <button> Update </button>
+            <button onClick = {() => {deleteItem(val.AlanID )}}> Delete </button>
+            <br></br>
+        </tbody>
+      )
+      )}
     </div>
   );
 }

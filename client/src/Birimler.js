@@ -14,6 +14,16 @@ function Birimler() {
     const [PostaKodu, setPostaKodu] = useState("");
     const [BirimMudurKullaniciAdi, setBirimMudurKullaniciAdi] = useState("");
 
+    const [birimlerList, setBirimlerList] = useState ([]);
+
+    useEffect(() => {
+      Axios.get('http://localhost:3001/api/get/birimler').then((response)=> {
+        setBirimlerList(response.data);
+      });
+      
+    }, []);
+
+
     const birimKaydet = () => {
         Axios.post("http://localhost:3001/api/birimler", {
             BirimKodu: BirimKodu,
@@ -28,7 +38,11 @@ function Birimler() {
             alert ("Successful");
         })
         
-    }
+    };
+
+    const deleteItem = (item) => {
+      Axios.delete(`http://localhost:3001/api/delete/birimler/${item}`)
+  };
   return (
     <div className="Kullanicilar">
       <h1>Rent a Car</h1>
@@ -78,6 +92,24 @@ function Birimler() {
            Geri
          </button>
       </Link>
+
+      <br></br><br></br>
+      {birimlerList.map((val) => (
+        <tbody>
+            <td> Birim Kodu = {val.BirimKodu}</td>
+            <td> Birim Adi = {val.BirimAdi}</td>
+            <td> Ust Birim Kodu = {val.UstBirimKodu}</td>
+            <td> Bulundugu Adres = {val.BulunduguAdres}</td>
+            <td> Il Kodu ={val.IlKodu}</td>
+            <td> Ilce Kodu = {val.IlceKodu}</td>
+            <td> Posta Kodu = {val.PostaKodu}</td>
+            <td> Birim Mudur Kullanici Adi {val.BirimMudurKullaniciAdi}</td>
+            <button> Update </button>
+            <button onClick = {() => {deleteItem(val.IlKodu)}}> Delete </button>
+            <br></br>
+        </tbody>
+      )
+      )}
     </div>
   );
 }

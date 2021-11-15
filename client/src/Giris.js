@@ -71,12 +71,7 @@ import {Link } from "react-router-dom";
             Belirtecler CRUD
          </button>
          </Link>
-         <br></br>
-         <br></br>
-         <Link to="/Birimler"><button>
-           Birimler CRUD
-         </button>
-         </Link>
+         
        </div>
        
      );

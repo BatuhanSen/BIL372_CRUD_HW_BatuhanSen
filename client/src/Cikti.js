@@ -10,6 +10,15 @@ function Cikti() {
     const [CiktiID, setCiktiID] = useState("");
     const [CiktiAdi, setCiktiAdi] = useState("");
 
+    const [ciktiList, setCiktiList] = useState ([]);
+
+    useEffect(() => {
+      Axios.get('http://localhost:3001/api/get/cikti').then((response)=> {
+        setCiktiList(response.data);
+      });
+      
+    }, []);
+
     const ciktiKaydet = () => {
         Axios.post("http://localhost:3001/api/cikti", {
             AlanID: AlanID,
@@ -20,7 +29,10 @@ function Cikti() {
             alert ("Successful");
         })
         
-    }
+    };
+    const deleteItem = (item) => {
+      Axios.delete(`http://localhost:3001/api/delete/cikti/${item}`)
+  };
   return (
     <div className="Kullanicilar">
       <h1>Rent a Car</h1>
@@ -47,6 +59,21 @@ function Cikti() {
            Geri
          </button>
       </Link>
+
+      <br></br><br></br>
+      {ciktiList.map((val) => (
+        <tbody>
+          
+            <td> Alan ID = {val.AlanID}</td>
+            <td> Sinif ID = {val.SinifID}</td>
+            <td> Cikti ID = {val.CiktiID}</td>
+            <td> Cikti Adi = {val.CiktiAdi}</td>
+            <button> Update </button>
+            <button onClick = {() => {deleteItem(val.CiktiID )}}> Delete </button>
+            <br></br>
+        </tbody>
+      )
+      )}
     </div>
   );
 }

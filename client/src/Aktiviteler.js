@@ -8,6 +8,15 @@ function Aktiviteler() {
     const [AktiviteID, setAktiviteID] = useState("");
     const [AktiviteTanimi, setAktiviteTanimi] = useState("");
 
+    const [aktivitelerList, setAktivitelerList] = useState ([]);
+
+    useEffect(() => {
+      Axios.get('http://localhost:3001/api/get/aktiviteler').then((response)=> {
+        setAktivitelerList(response.data);
+      });
+      
+    }, []);
+
     const aktiviteKaydet = () => {
         Axios.post("http://localhost:3001/api/aktiviteler", {
             AktiviteID: AktiviteID,
@@ -16,7 +25,10 @@ function Aktiviteler() {
             alert ("Successful");
         })
         
-    }
+    };
+    const deleteItem = (item) => {
+      Axios.delete(`http://localhost:3001/api/delete/aktiviteler/${item}`)
+  };
   return (
     <div className="Kullanicilar">
       <h1>Rent a Car</h1>
@@ -35,6 +47,18 @@ function Aktiviteler() {
            Geri
          </button>
       </Link>
+      <br></br><br></br>
+      {aktivitelerList.map((val) => (
+        <tbody>
+          
+            <td> Aktiviteler ID = {val.AktiviteID}</td>
+            <td> Aktivite Tanimi = {val.AktiviteTanimi}</td>
+            <button> Update </button>
+            <button onClick = {() => {deleteItem(val.AktiviteID )}}> Delete </button>
+            <br></br>
+        </tbody>
+      )
+      )}
     </div>
   );
 }

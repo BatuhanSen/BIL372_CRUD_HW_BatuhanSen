@@ -18,6 +18,16 @@ function Personel() {
     const [UstKullaniciAdi, setUstKullaniciAdi] = useState("");
     const [CalistigiBirimKodu, setCalistigiBirimKodu] = useState("");
 
+    const [personelList, setPersonelList] = useState ([]);
+
+    useEffect(() => {
+      Axios.get('http://localhost:3001/api/get/personel').then((response)=> {
+        setPersonelList(response.data);
+      });
+      
+    }, []);
+
+
     const personelKaydet = () => {
         Axios.post("http://localhost:3001/api/personel", {
             KullaniciAdi: KullaniciAdi,
@@ -32,11 +42,29 @@ function Personel() {
             PostaKodu : PostaKodu,
             UstKullaniciAdi : UstKullaniciAdi,
             CalistigiBirimKodu : CalistigiBirimKodu
-        }).then (() => {
-            alert ("Successful");
-        })
+        });
+
+        setPersonelList([
+            ...personelList,
+            {   KullaniciAdi: KullaniciAdi,
+                Email : Email,
+                Ad : Ad,
+                Soyad : Soyad,
+                SicilNo : SicilNo,
+                Cep : Cep,
+                Ev_Adresi : Ev_Adresi,
+                IlKodu : IlKodu,
+                IlceKodu : IlceKodu,
+                PostaKodu : PostaKodu,
+                UstKullaniciAdi : UstKullaniciAdi,
+                CalistigiBirimKodu : CalistigiBirimKodu},
+          ]);
         
-    }
+    };
+
+    const deleteItem = (item) => {
+        Axios.delete(`http://localhost:3001/api/delete/personel/${item}`)
+    };
   return (
     <div className="Kullanicilar">
       <h1>Rent a Car</h1>
@@ -106,6 +134,30 @@ function Personel() {
            Geri
          </button>
       </Link>
+
+      <br></br><br></br>
+      {personelList.map((val) => (
+        <tbody>
+            <td> Kullanici Adi = {val.KullaniciAdi}</td>
+            <td> Email = {val.Email}</td>
+            <td> Ad = {val.Ad}</td>
+            <td> Soyad = {val.Soyad}</td>
+            <td> Sicil No = {val.SicilNo}</td>
+            <td> Cep = {val.Cep}</td>
+            <td> Ev Adresi = {val.Ev_Adresi}</td>
+            <td> Il Kodu ={val.IlKodu}</td>
+            <td> Ilce Kodu = {val.IlceKodu}</td>
+            <td> Posta Kodu = {val.PostaKodu}</td>
+            <td> Ust Kullanici Adi {val.UstKullaniciAdi}</td>
+            <td> Calistigi Birim Kodu {val.CalistigiBirimKodu}</td>
+            <button> Update </button>
+            <button onClick = {() => {deleteItem(val.SicilNo)}}> Delete </button>
+            <br></br>
+        </tbody>
+      )
+      )}
+
+
     </div>
   );
 }
